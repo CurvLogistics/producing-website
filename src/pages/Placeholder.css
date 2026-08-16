@@ -1,0 +1,32 @@
+.placeholder {
+  padding: 96px 0;
+}
+
+.placeholder__inner {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 0 32px;
+  text-align: center;
+}
+
+.placeholder .eyebrow {
+  color: var(--amber-600);
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 14px;
+}
+
+.placeholder h1 {
+  font-family: Georgia, serif;
+  font-size: 32px;
+  color: var(--green-900);
+  margin: 0 0 14px;
+}
+
+.placeholder p {
+  font-size: 15.5px;
+  color: var(--ink-soft);
+  line-height: 1.6;
+}
