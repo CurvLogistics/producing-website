@@ -1,30 +1,12 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
-import { BLOCKS } from "@contentful/rich-text-types";
-import type { Document } from "@contentful/rich-text-types";
-import { getHomePage } from "../lib/homeContent";
-import type { HomePageEntry } from "../types/contentful";
+import { getHomePage } from "../../lib/homeContent";
+import type { HomePageEntry, FeatureCardFields } from "../../types/contentful";
+import FeatureGrid, { type FeatureGridItem } from "../../components/FeatureGrid/FeatureGrid";
+import ContentSection from "../../components/ContentSection/ContentSection";
 import "./Home.css";
 
-// Content editors embed the section image directly in the "Content" rich
-// text field (Insert Media). This pulls that first embedded asset out so it
-// can be rendered as the standalone image column, and richTextOptions below
-// hides it from the inline text flow so it isn't shown twice.
-function findEmbeddedAsset(document?: Document) {
-  const assetNode = document?.content.find((node) => node.nodeType === BLOCKS.EMBEDDED_ASSET);
-  const target = (assetNode?.data as { target?: unknown } | undefined)?.target;
-  if (target && typeof target === "object" && "fields" in target) {
-    return target as { fields: { file?: { url?: string }; title?: string } };
-  }
-  return undefined;
-}
-
-const richTextOptions = {
-  renderNode: {
-    [BLOCKS.EMBEDDED_ASSET]: () => null,
-  },
-};
+const NOW_SOURCING = ["🟢 Limes", "🍊 Citrus", "🥑 Avocados", "🍇 Table Grapes", "🍅 Tomatoes", "🥭 Mangoes", "🍍 Pineapple", "🥦 Vegetables"];
 
 export default function Home() {
   const navigate = useNavigate();
@@ -60,9 +42,15 @@ export default function Home() {
   const heroVideoUrl = heroVideoAsset?.fields.file?.url;
   const heroVideoSrc = heroVideoUrl ? `https:${heroVideoUrl}` : "/hero-bg.mp4";
 
-  const contentAsset = findEmbeddedAsset(entry?.fields.content);
-  const contentImageUrl = contentAsset?.fields.file?.url;
-  const contentImageAlt = contentAsset?.fields.title ?? heading;
+  const whatWeDoItems: FeatureGridItem[] = (entry?.fields.whatWeDoCards ?? [])
+    .filter((card): card is typeof card & { fields: FeatureCardFields } => !!card && "fields" in card)
+    .map((card) => ({
+      icon: card.fields.icon,
+      title: card.fields.title,
+      body: card.fields.body,
+      linkHref: card.fields.linkHref,
+      linkLabel: card.fields.linkLabel,
+    }));
 
   return (
     <>
@@ -80,12 +68,7 @@ export default function Home() {
         </video>
         <div className="home-hero__overlay" />
 
-        <svg
-          className="home-hero__shape"
-          viewBox="0 0 400 400"
-          fill="none"
-          aria-hidden="true"
-        >
+        <svg className="home-hero__shape" viewBox="0 0 400 400" fill="none" aria-hidden="true">
           <path
             className="home-hero__shape-path"
             d="M60 300c0-60 60-90 100-50s-10 110-60 90-60-90 10-140 150-10 130 60-90 90-140 40"
@@ -112,36 +95,43 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="home-body">
-        <div className="home-body__inner">
-          {contentImageUrl && (
-            <img
-              className="home-body__image"
-              src={`https:${contentImageUrl}`}
-              alt={contentImageAlt}
-            />
-          )}
-
-          <div className="home-body__content">
-            {status === "loading" && <p>Loading content…</p>}
-            {status === "error" && (
-              <p>
-                Couldn't load content from Contentful. Check your{" "}
-                <code>VITE_CONTENTFUL_SPACE_ID</code> and{" "}
-                <code>VITE_CONTENTFUL_ACCESS_TOKEN</code> in <code>.env</code>.
-              </p>
-            )}
-            {status === "ready" && !entry && (
-              <p>
-                No <code>homePage</code> entry found yet — publish one in Contentful to
-                see it here.
-              </p>
-            )}
-            {entry?.fields.content &&
-              documentToReactComponents(entry.fields.content, richTextOptions)}
-          </div>
+      <section className="home-trust">
+        <div className="home-trust__inner">
+          <span>Trusted &amp; Experienced</span>
+          <span>Reliable Availability</span>
+          <span>Quality Guaranteed</span>
+          <span>Relationship-Driven Service</span>
         </div>
       </section>
+
+      <div className="home-ticker">
+        <div className="home-ticker__inner">
+          <span className="home-ticker__label">Now Sourcing</span>
+          <div className="home-ticker__viewport">
+            <div className="home-ticker__track">
+              {[...NOW_SOURCING, ...NOW_SOURCING].map((item, i) => (
+                <span key={i}>{item}</span>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <ContentSection
+        status={status}
+        hasEntry={!!entry}
+        content={entry?.fields.content}
+        fallbackAlt={heading}
+      />
+
+      {whatWeDoItems.length > 0 && (
+        <FeatureGrid
+          eyebrow={entry?.fields.whatWeDoEyebrow ?? "What We Do"}
+          heading={entry?.fields.whatWeDoHeading ?? "One partner for sourcing, moving, and delivering produce"}
+          intro={entry?.fields.whatWeDoIntro}
+          items={whatWeDoItems}
+        />
+      )}
     </>
   );
 }
