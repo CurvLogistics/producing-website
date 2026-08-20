@@ -18,7 +18,7 @@ const router = createBrowserRouter([
         element: (
           <Placeholder
             title="Products & Services"
-            description="Wholesale, retail, import/export, and distribution — page content coming soon."
+            description="Wholesale, retail, import/export, and distribution page content coming soon."
           />
         ),
       },
@@ -27,7 +27,7 @@ const router = createBrowserRouter([
         element: (
           <Placeholder
             title="About"
-            description="Our story, values, and team — page content coming soon."
+            description="Our story, values, and team page content coming soon."
           />
         ),
       },
