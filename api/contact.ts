@@ -1,6 +1,5 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
 import { Resend } from "resend";
-import twilio from "twilio";
 
 interface ContactPayload {
   name?: string;
@@ -63,18 +62,22 @@ async function sendEmail({ name, email, phone, message }: Required<Pick<ContactP
 }
 
 async function sendWhatsApp({ name, email, phone, message }: Required<Pick<ContactPayload, "name" | "email" | "phone">> & { message?: string }) {
-  const { TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN, TWILIO_WHATSAPP_FROM, NOTIFY_WHATSAPP_TO } = process.env;
+  const { CALLMEBOT_PHONE, CALLMEBOT_API_KEY } = process.env;
 
-  if (!TWILIO_ACCOUNT_SID || !TWILIO_AUTH_TOKEN || !TWILIO_WHATSAPP_FROM || !NOTIFY_WHATSAPP_TO) {
+  if (!CALLMEBOT_PHONE || !CALLMEBOT_API_KEY) {
     // WhatsApp notifications are optional — skip silently if not configured yet.
     return;
   }
 
-  const client = twilio(TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN);
+  const text = `New website inquiry from ${name}\n${phone} · ${email}\n\n${message || "(no message provided)"}`;
 
-  await client.messages.create({
-    from: `whatsapp:${TWILIO_WHATSAPP_FROM}`,
-    to: `whatsapp:${NOTIFY_WHATSAPP_TO}`,
-    body: `New website inquiry from ${name}\n${phone} · ${email}\n\n${message || "(no message provided)"}`,
-  });
+  const url = new URL("https://api.callmebot.com/whatsapp.php");
+  url.searchParams.set("phone", CALLMEBOT_PHONE);
+  url.searchParams.set("text", text);
+  url.searchParams.set("apikey", CALLMEBOT_API_KEY);
+
+  const res = await fetch(url.toString());
+  if (!res.ok) {
+    throw new Error(`CallMeBot request failed with status ${res.status}`);
+  }
 }

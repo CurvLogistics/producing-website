@@ -4,11 +4,15 @@ import type { ContactPageEntry } from "../../types/contentful";
 import "./Contact.css";
 
 type SubmitState = "idle" | "submitting" | "success" | "error";
+type FieldName = "name" | "email" | "phone" | "consent";
+
+const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 export default function Contact() {
   const [entry, setEntry] = useState<ContactPageEntry | null>(null);
   const [submitState, setSubmitState] = useState<SubmitState>("idle");
   const [consentChecked, setConsentChecked] = useState(false);
+  const [fieldErrors, setFieldErrors] = useState<Partial<Record<FieldName, string>>>({});
 
   useEffect(() => {
     let cancelled = false;
@@ -32,7 +36,7 @@ export default function Contact() {
     "I agree to be contacted by Producing Inc about my inquiry.";
   const submitLabel = entry?.fields.submitLabel || "Send";
   const successMessage =
-    entry?.fields.successMessage || "Thanks — your message is on its way. We'll be in touch soon.";
+    entry?.fields.successMessage || "Thank you, your message is on its way. We'll be in touch soon.";
   const errorMessage =
     entry?.fields.errorMessage || "Something went wrong sending your message. Please try again.";
 
@@ -44,10 +48,38 @@ export default function Contact() {
     }))
     .filter((image): image is { url: string; alt: string } => !!image.url);
 
+  function validate(formData: FormData): Partial<Record<FieldName, string>> {
+    const errors: Partial<Record<FieldName, string>> = {};
+    const name = (formData.get("name") as string).trim();
+    const email = (formData.get("email") as string).trim();
+    const phone = (formData.get("phone") as string).trim();
+
+    if (!name) errors.name = "Please enter your name.";
+    if (!email) errors.email = "Please enter your email.";
+    else if (!EMAIL_PATTERN.test(email)) errors.email = "Please enter a valid email address.";
+    if (!phone) errors.phone = "Please enter your phone number.";
+    if (!consentChecked) errors.consent = "Please confirm you agree before sending.";
+
+    return errors;
+  }
+
+  function clearFieldError(field: FieldName) {
+    setFieldErrors((prev) => {
+      if (!prev[field]) return prev;
+      const next = { ...prev };
+      delete next[field];
+      return next;
+    });
+  }
+
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const form = e.currentTarget;
     const formData = new FormData(form);
+
+    const errors = validate(formData);
+    setFieldErrors(errors);
+    if (Object.keys(errors).length > 0) return;
 
     setSubmitState("submitting");
 
@@ -68,6 +100,7 @@ export default function Contact() {
       setSubmitState("success");
       form.reset();
       setConsentChecked(false);
+      setFieldErrors({});
     } catch (err) {
       console.error("Contact form submission failed", err);
       setSubmitState("error");
@@ -83,22 +116,43 @@ export default function Contact() {
           {entry?.fields.intro && <p>{intro}</p>}
         </div>
 
-        <form className="contact__form" onSubmit={handleSubmit}>
+        <form className="contact__form" onSubmit={handleSubmit} noValidate>
           <div className="contact__row">
-            <div className="contact__field">
+            <div className={`contact__field${fieldErrors.name ? " contact__field--error" : ""}`}>
               <label htmlFor="name">Full Name*</label>
-              <input id="name" name="name" type="text" placeholder="Full Name*" required />
+              <input
+                id="name"
+                name="name"
+                type="text"
+                placeholder="Full Name*"
+                onChange={() => clearFieldError("name")}
+              />
+              {fieldErrors.name && <span className="contact__field-error">{fieldErrors.name}</span>}
             </div>
-            <div className="contact__field">
+            <div className={`contact__field${fieldErrors.email ? " contact__field--error" : ""}`}>
               <label htmlFor="email">Email*</label>
-              <input id="email" name="email" type="email" placeholder="Email*" required />
+              <input
+                id="email"
+                name="email"
+                type="email"
+                placeholder="Email*"
+                onChange={() => clearFieldError("email")}
+              />
+              {fieldErrors.email && <span className="contact__field-error">{fieldErrors.email}</span>}
             </div>
           </div>
 
           <div className="contact__row">
-            <div className="contact__field">
+            <div className={`contact__field${fieldErrors.phone ? " contact__field--error" : ""}`}>
               <label htmlFor="phone">Phone Number*</label>
-              <input id="phone" name="phone" type="tel" placeholder="Phone Number*" required />
+              <input
+                id="phone"
+                name="phone"
+                type="tel"
+                placeholder="Phone Number*"
+                onChange={() => clearFieldError("phone")}
+              />
+              {fieldErrors.phone && <span className="contact__field-error">{fieldErrors.phone}</span>}
             </div>
             <div className="contact__field">
               <label htmlFor="message">Message</label>
@@ -106,15 +160,20 @@ export default function Contact() {
             </div>
           </div>
 
-          <label className="contact__consent">
-            <input
-              type="checkbox"
-              required
-              checked={consentChecked}
-              onChange={(e) => setConsentChecked(e.target.checked)}
-            />
-            <span>{consentText}</span>
-          </label>
+          <div>
+            <label className={`contact__consent${fieldErrors.consent ? " contact__consent--error" : ""}`}>
+              <input
+                type="checkbox"
+                checked={consentChecked}
+                onChange={(e) => {
+                  setConsentChecked(e.target.checked);
+                  clearFieldError("consent");
+                }}
+              />
+              <span>{consentText}</span>
+            </label>
+            {fieldErrors.consent && <span className="contact__field-error">{fieldErrors.consent}</span>}
+          </div>
 
           <button className="btn btn-primary contact__submit" type="submit" disabled={submitState === "submitting"}>
             {submitState === "submitting" ? "Sending…" : submitLabel}
