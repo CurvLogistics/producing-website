@@ -19,7 +19,7 @@
 }
 
 .placeholder h1 {
-  font-family: Georgia, serif;
+  font-family: var(--font-family-ubuntu);
   font-size: 32px;
   color: var(--green-900);
   margin: 0 0 14px;

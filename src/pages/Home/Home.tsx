@@ -1,9 +1,24 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getHomePage } from "../../lib/homeContent";
-import type { HomePageEntry, FeatureCardFields } from "../../types/contentful";
+import type {
+  HomePageEntry,
+  FeatureCardFields,
+  SegmentCardFields,
+  ProductTileFields,
+  EventCardFields,
+  CarouselSlideFields,
+} from "../../types/contentful";
 import FeatureGrid, { type FeatureGridItem } from "../../components/FeatureGrid/FeatureGrid";
-import ContentSection from "../../components/ContentSection/ContentSection";
+// import ContentSection from "../../components/ContentSection/ContentSection";
+import SegmentSplit, { type SegmentSplitItem } from "../../components/SegmentSplit/SegmentSplit";
+import ImageTileGrid, { type ImageTileGridItem } from "../../components/ImageTileGrid/ImageTileGrid";
+import ImageText from "../../components/ImageText/ImageText";
+import EventsRail, { type EventsRailItem } from "../../components/EventsRail/EventsRail";
+import NewsletterBar from "../../components/NewsletterBar/NewsletterBar";
+import Testimonial from "../../components/Testimonial/Testimonial";
+import Carousel, { type CarouselSlideData } from "../../components/Carousel/Carousel";
+import Reveal from "../../components/Reveal/Reveal";
 import "./Home.css";
 
 const NOW_SOURCING = ["🟢 Limes", "🍊 Citrus", "🥑 Avocados", "🍇 Table Grapes", "🍅 Tomatoes", "🥭 Mangoes", "🍍 Pineapple", "🥦 Vegetables"];
@@ -52,6 +67,79 @@ export default function Home() {
       linkLabel: card.fields.linkLabel,
     }));
 
+   const whyChooseItems: FeatureGridItem[] = (entry?.fields.whyChooseCards ?? [])
+  .filter((card): card is typeof card & { fields: FeatureCardFields } => !!card && "fields" in card)
+  .map((card) => ({
+    icon: card.fields.icon,
+    title: card.fields.title,
+    body: card.fields.body,
+    linkHref: card.fields.linkHref,
+    linkLabel: card.fields.linkLabel,
+  }));
+
+  const twoWaysItems: SegmentSplitItem[] = (entry?.fields.twoWaysCards ?? [])
+  .filter((card): card is typeof card & { fields: SegmentCardFields } => !!card && "fields" in card)
+  .map((card) => ({
+    icon: card.fields.icon,
+    title: card.fields.title,
+    body: card.fields.body,
+    buttonLabel: card.fields.buttonLabel,
+    buttonHref: card.fields.buttonHref,
+    highlight: card.fields.highlight,
+  }));
+
+  const productTiles: ImageTileGridItem[] = (entry?.fields.productsTiles ?? [])
+    .filter((tile): tile is typeof tile & { fields: ProductTileFields } => !!tile && "fields" in tile)
+    .map((tile) => {
+      const imageField = tile.fields.image;
+      const imageAsset = imageField && "fields" in imageField ? imageField : undefined;
+      const imageUrl = imageAsset?.fields.file?.url;
+      return {
+        label: tile.fields.label,
+        imageUrl: imageUrl ? `https:${imageUrl}` : undefined,
+        href: tile.fields.href,
+      };
+    });
+
+  const storyImageField = entry?.fields.storyImage;
+  const storyImageAsset = storyImageField && "fields" in storyImageField ? storyImageField : undefined;
+  const storyImageUrl = storyImageAsset?.fields.file?.url;
+  const storyImageAlt = storyImageAsset?.fields.title ?? entry?.fields.storyHeading;
+
+  const storyVideoField = entry?.fields.storyVideo;
+  const storyVideoAsset = storyVideoField && "fields" in storyVideoField ? storyVideoField : undefined;
+  const storyVideoUrl = storyVideoAsset?.fields.file?.url;
+
+  const carouselSlides: CarouselSlideData[] = (entry?.fields.carouselSlides ?? [])
+    .filter((slide): slide is typeof slide & { fields: CarouselSlideFields } => !!slide && "fields" in slide)
+    .map((slide) => {
+      const asset = slide.fields.media && "fields" in slide.fields.media ? slide.fields.media : undefined;
+      const contentType = asset?.fields.file?.contentType ?? "";
+      const url = asset?.fields.file?.url;
+      return {
+        mediaUrl: url ? `https:${url}` : "",
+        mediaType: contentType.startsWith("video/") ? ("video" as const) : ("image" as const),
+        heading: slide.fields.heading,
+        body: slide.fields.body,
+      };
+    })
+    .filter((slide) => slide.mediaUrl);
+
+  const eventItems: EventsRailItem[] = (entry?.fields.eventsCards ?? [])
+    .filter((card): card is typeof card & { fields: EventCardFields } => !!card && "fields" in card)
+    .map((card) => {
+      const imageField = card.fields.image;
+      const imageAsset = imageField && "fields" in imageField ? imageField : undefined;
+      const imageUrl = imageAsset?.fields.file?.url;
+      return {
+        number: card.fields.number,
+        name: card.fields.name,
+        note: card.fields.note,
+        href: card.fields.href,
+        imageUrl: imageUrl ? `https:${imageUrl}` : undefined,
+      };
+    });
+
   return (
     <>
       <section className="home-hero">
@@ -95,14 +183,16 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="home-trust">
-        <div className="home-trust__inner">
-          <span>Trusted &amp; Experienced</span>
-          <span>Reliable Availability</span>
-          <span>Quality Guaranteed</span>
-          <span>Relationship-Driven Service</span>
-        </div>
-      </section>
+      <Reveal direction="up">
+        <section className="home-trust">
+          <div className="home-trust__inner">
+            <span>Trusted &amp; Experienced</span>
+            <span>Reliable Availability</span>
+            <span>Quality Guaranteed</span>
+            <span>Relationship-Driven Service</span>
+          </div>
+        </section>
+      </Reveal>
 
       <div className="home-ticker">
         <div className="home-ticker__inner">
@@ -117,20 +207,100 @@ export default function Home() {
         </div>
       </div>
 
-      <ContentSection
+      {/* <ContentSection
         status={status}
         hasEntry={!!entry}
         content={entry?.fields.content}
         fallbackAlt={heading}
-      />
+      /> */}
 
       {whatWeDoItems.length > 0 && (
-        <FeatureGrid
-          eyebrow={entry?.fields.whatWeDoEyebrow ?? "What We Do"}
-          heading={entry?.fields.whatWeDoHeading ?? "One partner for sourcing, moving, and delivering produce"}
-          intro={entry?.fields.whatWeDoIntro}
-          items={whatWeDoItems}
-        />
+        <Reveal direction="up">
+          <FeatureGrid
+            eyebrow={entry?.fields.whatWeDoEyebrow || "What We Do"}
+            heading={entry?.fields.whatWeDoHeading || "One partner for sourcing, moving, and delivering produce"}
+            intro={entry?.fields.whatWeDoIntro}
+            items={whatWeDoItems}
+          />
+        </Reveal>
+      )}
+      {whyChooseItems.length > 0 && (
+        <Reveal direction="up">
+          <FeatureGrid
+            alt
+            eyebrow={entry?.fields.whyChooseEyebrow || "Why Choose Producing"}
+            heading={
+              entry?.fields.whyChooseHeading ||
+              "Customers stay because we're reliable partners, not just a supplier"
+            }
+            intro={entry?.fields.whyChooseIntro}
+            items={whyChooseItems}
+          />
+        </Reveal>
+      )}
+      {twoWaysItems.length > 0 && (
+        <Reveal direction="up">
+          <SegmentSplit
+            eyebrow={entry?.fields.twoWaysEyebrow || "Two Ways to Work With Us"}
+            heading={
+              entry?.fields.twoWaysHeading || "Whether You Buy or You Grow, There's a Path for You"
+            }
+            items={twoWaysItems}
+          />
+        </Reveal>
+      )}
+      {productTiles.length > 0 && (
+        <Reveal direction="up">
+          <ImageTileGrid
+            eyebrow={entry?.fields.productsEyebrow || "Our Products"}
+            heading={entry?.fields.productsHeading || "Fresh produce across every major category"}
+            items={productTiles}
+            ctaLabel={entry?.fields.productsCtaLabel || "View All Products & Services"}
+            ctaHref={entry?.fields.productsCtaHref || "/products"}
+          />
+        </Reveal>
+      )}
+
+      {carouselSlides.length > 0 && <Carousel slides={carouselSlides} />}
+
+      {entry?.fields.storyHeading && entry?.fields.storyBody && (
+        <Reveal direction="up">
+          <ImageText
+            eyebrow={entry.fields.storyEyebrow || "Our Story"}
+            heading={entry.fields.storyHeading}
+            body={entry.fields.storyBody}
+            imageUrl={storyImageUrl ? `https:${storyImageUrl}` : undefined}
+            imageAlt={storyImageAlt}
+            videoUrl={storyVideoUrl ? `https:${storyVideoUrl}` : undefined}
+            linkLabel={entry.fields.storyLinkLabel}
+            linkHref={entry.fields.storyLinkHref}
+          />
+        </Reveal>
+      )}
+      {eventItems.length > 0 && (
+        <Reveal direction="up">
+          <EventsRail
+            eyebrow={entry?.fields.eventsEyebrow || "Out in the Industry"}
+            heading={entry?.fields.eventsHeading || "You'll Find Us at the Shows That Matter"}
+            intro={entry?.fields.eventsIntro}
+            items={eventItems}
+            ctaLabel={entry?.fields.eventsCtaLabel || "See All Events"}
+            ctaHref={entry?.fields.eventsCtaHref || "/events"}
+          />
+        </Reveal>
+      )}
+
+      <Reveal direction="up">
+        <NewsletterBar />
+      </Reveal>
+
+      {entry?.fields.testimonialQuote && entry?.fields.testimonialAttribution && (
+        <Reveal direction="up">
+          <Testimonial
+            quote={entry.fields.testimonialQuote}
+            attribution={entry.fields.testimonialAttribution}
+          />
+        </Reveal>
       )}
     </>
   );

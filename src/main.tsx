@@ -4,6 +4,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "./index.css";
 import MainLayout from "./layouts/MainLayout";
 import Home from "./pages/Home/Home";
+import Contact from "./pages/Contact/Contact";
 import Placeholder from "./pages/Placeholder";
 
 const router = createBrowserRouter([
@@ -38,15 +39,7 @@ const router = createBrowserRouter([
           />
         ),
       },
-      {
-        path: "/contact",
-        element: (
-          <Placeholder
-            title="Contact"
-            description="Request a quote or get in touch with our team — page content coming soon."
-          />
-        ),
-      },
+      { path: "/contact", element: <Contact /> },
     ],
   },
 ]);

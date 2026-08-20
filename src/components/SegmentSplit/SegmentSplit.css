@@ -1,0 +1,95 @@
+.segment-split {
+  padding: 76px 0;
+  background: var(--green-100);
+}
+
+.segment-split__inner {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 0 32px;
+}
+
+.segment-split__head {
+  max-width: 640px;
+  margin-bottom: 44px;
+}
+
+.segment-split__head .eyebrow {
+  color: var(--amber-600);
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+
+.segment-split__head h2 {
+  font-size: 32px;
+  color: var(--green-900);
+}
+
+.segment-split__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+
+.segment-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: 14px;
+  padding: 34px 30px;
+  color: #fff;
+  background: linear-gradient(150deg, var(--green-700), var(--green-900));
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.segment-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 18px 34px rgba(18, 53, 36, 0.22);
+}
+
+.segment-card--amber {
+  background: linear-gradient(150deg, var(--amber-500), var(--amber-600));
+  color: #1b1b18;
+}
+
+.segment-card__icon {
+  font-size: 30px;
+  margin-bottom: 16px;
+  display: inline-block;
+  transition: transform 0.3s ease;
+}
+
+.segment-card:hover .segment-card__icon {
+  transform: scale(1.15) rotate(-4deg);
+}
+
+.segment-card h3 {
+  font-size: 22px;
+  margin-bottom: 10px;
+}
+
+.segment-card p {
+  font-size: 14px;
+  line-height: 1.6;
+  opacity: 0.92;
+  margin-bottom: 20px;
+  max-width: 340px;
+}
+
+.segment-card .btn {
+  background: #fff;
+  color: var(--green-900);
+}
+
+.segment-card--amber .btn {
+  background: #1b1b18;
+  color: #fff;
+}
+
+@media (max-width: 900px) {
+  .segment-split__grid {
+    grid-template-columns: 1fr;
+  }
+}

@@ -1,0 +1,71 @@
+.image-tile-grid {
+  padding: 76px 0;
+}
+
+.image-tile-grid__inner {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 0 32px;
+}
+
+.image-tile-grid__head {
+  max-width: 640px;
+  margin-bottom: 44px;
+}
+
+.image-tile-grid__head .eyebrow {
+  color: var(--amber-600);
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+
+.image-tile-grid__head h2 {
+  font-size: 32px;
+  color: var(--green-900);
+}
+
+.image-tile-grid__tiles {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 22px;
+}
+
+.image-tile {
+  position: relative;
+  border-radius: 10px;
+  overflow: hidden;
+  height: 210px;
+  display: flex;
+  align-items: flex-end;
+  background: linear-gradient(135deg, #e7efe9, #cfe0d5);
+  background-size: cover;
+  background-position: center;
+  transition: transform 0.2s ease;
+}
+
+.image-tile:hover {
+  transform: scale(1.03);
+}
+
+.image-tile__label {
+  width: 100%;
+  padding: 14px 16px;
+  background: linear-gradient(0deg, rgba(10, 32, 21, 0.85), transparent);
+  color: #fff;
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.image-tile-grid__cta {
+  text-align: center;
+  margin-top: 32px;
+}
+
+@media (max-width: 900px) {
+  .image-tile-grid__tiles {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}

@@ -109,7 +109,7 @@
 }
 
 .home-hero h1 {
-  font-family: Georgia, serif;
+  font-family: var(--font-family-ubuntu);
   font-size: 48px;
   max-width: 680px;
   margin: 0 0 20px;
@@ -245,7 +245,36 @@
 }
 
 @media (max-width: 900px) {
+  .home-trust__inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    justify-content: normal;
+    gap: 10px 16px;
+  }
+
+  .home-hero__inner {
+    padding: 56px 24px;
+  }
+
   .home-hero h1 {
-    font-size: 34px;
+    font-size: 30px;
+  }
+
+  .home-hero__intro {
+    font-size: 15.5px;
+  }
+
+  .home-hero__shape {
+    width: 220px;
+    height: 220px;
+    right: -50px;
+    bottom: -50px;
+    opacity: 0.5;
+  }
+}
+
+@media (max-width: 480px) {
+  .home-hero__shape {
+    display: none;
   }
 }

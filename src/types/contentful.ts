@@ -15,13 +15,106 @@ export interface FeatureCardSkeleton extends EntrySkeletonType {
 
 export type FeatureCardEntry = Entry<FeatureCardSkeleton, undefined>;
 
+export interface SegmentCardFields {
+  icon: EntryFieldTypes.Symbol;
+  title: EntryFieldTypes.Symbol;
+  body: EntryFieldTypes.Text;
+  buttonLabel: EntryFieldTypes.Symbol;
+  buttonHref: EntryFieldTypes.Symbol;
+  highlight?: EntryFieldTypes.Boolean;
+}
+
+export interface SegmentCardSkeleton extends EntrySkeletonType {
+  contentTypeId: "segmentCard";
+  fields: SegmentCardFields;
+}
+
+export type SegmentCardEntry = Entry<SegmentCardSkeleton, undefined>;
+
+export interface ProductTileFields {
+  label: EntryFieldTypes.Symbol;
+  image?: EntryFieldTypes.AssetLink;
+  href?: EntryFieldTypes.Symbol;
+}
+
+export interface ProductTileSkeleton extends EntrySkeletonType {
+  contentTypeId: "productTile";
+  fields: ProductTileFields;
+}
+
+export type ProductTileEntry = Entry<ProductTileSkeleton, undefined>;
+
+export interface EventCardFields {
+  number: EntryFieldTypes.Symbol;
+  name: EntryFieldTypes.Symbol;
+  note: EntryFieldTypes.Symbol;
+  image?: EntryFieldTypes.AssetLink;
+  href?: EntryFieldTypes.Symbol;
+}
+
+export interface EventCardSkeleton extends EntrySkeletonType {
+  contentTypeId: "eventCard";
+  fields: EventCardFields;
+}
+
+export type EventCardEntry = Entry<EventCardSkeleton, undefined>;
+
+export interface CarouselSlideFields {
+  media: EntryFieldTypes.AssetLink;
+  heading?: EntryFieldTypes.Symbol;
+  body?: EntryFieldTypes.Symbol;
+}
+
+export interface CarouselSlideSkeleton extends EntrySkeletonType {
+  contentTypeId: "carouselSlide";
+  fields: CarouselSlideFields;
+}
+
+export type CarouselSlideEntry = Entry<CarouselSlideSkeleton, undefined>;
+
 export interface HomePageFields {
   heroVideo?: EntryFieldTypes.AssetLink;
   content: EntryFieldTypes.RichText;
+
+  carouselSlides?: EntryFieldTypes.Array<EntryFieldTypes.EntryLink<CarouselSlideSkeleton>>;
+
   whatWeDoEyebrow?: EntryFieldTypes.Symbol;
   whatWeDoHeading?: EntryFieldTypes.Symbol;
   whatWeDoIntro?: EntryFieldTypes.Symbol;
   whatWeDoCards?: EntryFieldTypes.Array<EntryFieldTypes.EntryLink<FeatureCardSkeleton>>;
+
+  whyChooseEyebrow?: EntryFieldTypes.Symbol;
+  whyChooseHeading?: EntryFieldTypes.Symbol;
+  whyChooseIntro?: EntryFieldTypes.Symbol;
+  whyChooseCards?: EntryFieldTypes.Array<EntryFieldTypes.EntryLink<FeatureCardSkeleton>>;
+
+  twoWaysEyebrow?: EntryFieldTypes.Symbol;
+  twoWaysHeading?: EntryFieldTypes.Symbol;
+  twoWaysCards?: EntryFieldTypes.Array<EntryFieldTypes.EntryLink<SegmentCardSkeleton>>;
+
+  productsEyebrow?: EntryFieldTypes.Symbol;
+  productsHeading?: EntryFieldTypes.Symbol;
+  productsCtaLabel?: EntryFieldTypes.Symbol;
+  productsCtaHref?: EntryFieldTypes.Symbol;
+  productsTiles?: EntryFieldTypes.Array<EntryFieldTypes.EntryLink<ProductTileSkeleton>>;
+
+  storyEyebrow?: EntryFieldTypes.Symbol;
+  storyHeading?: EntryFieldTypes.Symbol;
+  storyBody?: EntryFieldTypes.Text;
+  storyImage?: EntryFieldTypes.AssetLink;
+  storyVideo?: EntryFieldTypes.AssetLink;
+  storyLinkLabel?: EntryFieldTypes.Symbol;
+  storyLinkHref?: EntryFieldTypes.Symbol;
+
+  eventsEyebrow?: EntryFieldTypes.Symbol;
+  eventsHeading?: EntryFieldTypes.Symbol;
+  eventsIntro?: EntryFieldTypes.Symbol;
+  eventsCards?: EntryFieldTypes.Array<EntryFieldTypes.EntryLink<EventCardSkeleton>>;
+  eventsCtaLabel?: EntryFieldTypes.Symbol;
+  eventsCtaHref?: EntryFieldTypes.Symbol;
+
+  testimonialQuote?: EntryFieldTypes.Text;
+  testimonialAttribution?: EntryFieldTypes.Symbol;
 }
 
 export interface HomePageSkeleton extends EntrySkeletonType {
@@ -30,3 +123,20 @@ export interface HomePageSkeleton extends EntrySkeletonType {
 }
 
 export type HomePageEntry = Entry<HomePageSkeleton, undefined>;
+
+export interface ContactPageFields {
+  eyebrow?: EntryFieldTypes.Symbol;
+  heading?: EntryFieldTypes.Symbol;
+  intro?: EntryFieldTypes.Symbol;
+  consentText?: EntryFieldTypes.Symbol;
+  submitLabel?: EntryFieldTypes.Symbol;
+  successMessage?: EntryFieldTypes.Symbol;
+  errorMessage?: EntryFieldTypes.Symbol;
+}
+
+export interface ContactPageSkeleton extends EntrySkeletonType {
+  contentTypeId: "contactPage";
+  fields: ContactPageFields;
+}
+
+export type ContactPageEntry = Entry<ContactPageSkeleton, undefined>;

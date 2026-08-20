@@ -11,6 +11,10 @@
   --line: #e7e3d8;
   --white: #fff;
 
+  --font-family-montserrat: "Montserrat Variable", Montserrat, system-ui, -apple-system, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
+  --font-family-ubuntu: "Ubuntu", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+
   color-scheme: light;
 }
 
@@ -25,7 +29,7 @@ body {
 }
 
 body {
-  font-family: "Segoe UI", Helvetica, Arial, sans-serif;
+  font-family: var(--font-family-montserrat);
   background: var(--cream);
   color: var(--ink);
 }
@@ -34,7 +38,7 @@ h1,
 h2,
 h3,
 h4 {
-  font-family: Georgia, "Segoe UI", serif;
+  font-family: var(--font-family-ubuntu);
   margin: 0;
   line-height: 1.15;
 }
@@ -62,6 +66,7 @@ button {
 
 .site main {
   flex: 1;
+  overflow-x: clip;
 }
 
 .btn {
