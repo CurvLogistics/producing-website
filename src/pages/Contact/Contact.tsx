@@ -53,12 +53,10 @@ export default function Contact() {
     const errors: Partial<Record<FieldName, string>> = {};
     const name = (formData.get("name") as string).trim();
     const email = (formData.get("email") as string).trim();
-    const phone = (formData.get("phone") as string).trim();
 
     if (!name) errors.name = "Please enter your name.";
     if (!email) errors.email = "Please enter your email.";
     else if (!EMAIL_PATTERN.test(email)) errors.email = "Please enter a valid email address.";
-    if (!phone) errors.phone = "Please enter your phone number.";
     if (!consentChecked) errors.consent = "Please confirm you agree before sending.";
 
     return errors;
@@ -145,16 +143,9 @@ export default function Contact() {
           </div>
 
           <div className="contact__row">
-            <div className={`contact__field${fieldErrors.phone ? " contact__field--error" : ""}`}>
-              <label htmlFor="phone">Phone Number*</label>
-              <input
-                id="phone"
-                name="phone"
-                type="tel"
-                placeholder="Phone Number*"
-                onChange={() => clearFieldError("phone")}
-              />
-              {fieldErrors.phone && <span className="contact__field-error">{fieldErrors.phone}</span>}
+            <div className="contact__field">
+              <label htmlFor="phone">Phone Number</label>
+              <input id="phone" name="phone" type="tel" placeholder="Phone Number" />
             </div>
             <div className="contact__field">
               <label htmlFor="message">Message</label>

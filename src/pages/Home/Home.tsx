@@ -260,20 +260,21 @@ export default function Home() {
 
       {carouselSlides.length > 0 && <Carousel slides={carouselSlides} />}
 
-      {entry?.fields.storyHeading && entry?.fields.storyBody && (
-        <Reveal direction="up">
-          <ImageText
-            eyebrow={entry.fields.storyEyebrow || "Our Story"}
-            heading={entry.fields.storyHeading}
-            body={entry.fields.storyBody}
-            imageUrl={storyImageUrl ? `https:${storyImageUrl}` : undefined}
-            imageAlt={storyImageAlt}
-            videoUrl={storyVideoUrl ? `https:${storyVideoUrl}` : undefined}
-            linkLabel={entry.fields.storyLinkLabel}
-            linkHref={entry.fields.storyLinkHref}
-          />
-        </Reveal>
-      )}
+      <Reveal direction="up">
+        <ImageText
+          eyebrow={entry?.fields.storyEyebrow || "Our Story"}
+          heading={entry?.fields.storyHeading || "From Farm to Fork, With Precision and Care"}
+          body={
+            entry?.fields.storyBody ||
+            "Producing has built its reputation on sourcing the freshest produce and delivering it with the reliability our customers depend on. We're committed to quality, food safety, and long-term relationships — not one-time transactions."
+          }
+          imageUrl={storyImageUrl ? `https:${storyImageUrl}` : undefined}
+          imageAlt={storyImageAlt}
+          videoUrl={storyVideoUrl ? `https:${storyVideoUrl}` : undefined}
+          linkLabel={entry?.fields.storyLinkLabel || "Our Story →"}
+          linkHref={entry?.fields.storyLinkHref || "/about"}
+        />
+      </Reveal>
       {eventItems.length > 0 && (
         <Reveal direction="up">
           <EventsRail

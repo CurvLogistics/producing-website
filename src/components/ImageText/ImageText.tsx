@@ -31,14 +31,22 @@ export default function ImageText({
           <video className="image-text__video" poster={imageUrl} autoPlay muted loop playsInline>
             <source src={videoUrl} type="video/mp4" />
           </video>
+        ) : imageUrl ? (
+          <img className="image-text__image" src={imageUrl} alt={imageAlt ?? ""} />
         ) : (
-          <div
-            className="image-text__image"
-            style={imageUrl ? { backgroundImage: `url(${imageUrl})` } : undefined}
-            role={imageUrl ? "img" : undefined}
-            aria-label={imageUrl ? imageAlt : undefined}
-          >
-            {!imageUrl && <span>{imageAlt}</span>}
+          <div className="image-text__image image-text__image--placeholder">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <rect x="2.5" y="4.5" width="19" height="15" rx="2.5" stroke="currentColor" strokeWidth="1.5" />
+              <circle cx="8" cy="10" r="1.6" stroke="currentColor" strokeWidth="1.5" />
+              <path
+                d="M4 17.5l5-5 3.5 3.5L17 11l3 3"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+            <span>{imageAlt}</span>
           </div>
         )}
 
