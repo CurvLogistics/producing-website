@@ -144,3 +144,56 @@ export interface ContactPageSkeleton extends EntrySkeletonType {
 }
 
 export type ContactPageEntry = Entry<ContactPageSkeleton, undefined>;
+
+export interface UpcomingEventFields {
+  image: EntryFieldTypes.AssetLink;
+  name?: EntryFieldTypes.Symbol;
+  href?: EntryFieldTypes.Symbol;
+}
+
+export interface UpcomingEventSkeleton extends EntrySkeletonType {
+  contentTypeId: "upcomingEvent";
+  fields: UpcomingEventFields;
+}
+
+export type UpcomingEventEntry = Entry<UpcomingEventSkeleton, undefined>;
+
+export interface EventGalleryGroupFields {
+  name: EntryFieldTypes.Symbol;
+  note: EntryFieldTypes.Symbol;
+  images?: EntryFieldTypes.Array<EntryFieldTypes.AssetLink>;
+}
+
+export interface EventGalleryGroupSkeleton extends EntrySkeletonType {
+  contentTypeId: "eventGalleryGroup";
+  fields: EventGalleryGroupFields;
+}
+
+export type EventGalleryGroupEntry = Entry<EventGalleryGroupSkeleton, undefined>;
+
+export interface EventsPageFields {
+  heroEyebrow?: EntryFieldTypes.Symbol;
+  heroHeading?: EntryFieldTypes.Symbol;
+  heroIntro?: EntryFieldTypes.Symbol;
+  heroImage?: EntryFieldTypes.AssetLink;
+
+  upcomingEyebrow?: EntryFieldTypes.Symbol;
+  upcomingHeading?: EntryFieldTypes.Symbol;
+  upcomingEvents?: EntryFieldTypes.Array<EntryFieldTypes.EntryLink<UpcomingEventSkeleton>>;
+
+  highlightsEyebrow?: EntryFieldTypes.Symbol;
+  highlightsHeading?: EntryFieldTypes.Symbol;
+  galleryGroups?: EntryFieldTypes.Array<EntryFieldTypes.EntryLink<EventGalleryGroupSkeleton>>;
+
+  ctaHeading?: EntryFieldTypes.Symbol;
+  ctaIntro?: EntryFieldTypes.Symbol;
+  ctaLabel?: EntryFieldTypes.Symbol;
+  ctaHref?: EntryFieldTypes.Symbol;
+}
+
+export interface EventsPageSkeleton extends EntrySkeletonType {
+  contentTypeId: "eventsPage";
+  fields: EventsPageFields;
+}
+
+export type EventsPageEntry = Entry<EventsPageSkeleton, undefined>;

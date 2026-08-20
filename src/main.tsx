@@ -5,6 +5,7 @@ import "./index.css";
 import MainLayout from "./layouts/MainLayout";
 import Home from "./pages/Home/Home";
 import Contact from "./pages/Contact/Contact";
+import Events from "./pages/Events/Events";
 import Placeholder from "./pages/Placeholder";
 
 const router = createBrowserRouter([
@@ -30,15 +31,7 @@ const router = createBrowserRouter([
           />
         ),
       },
-      {
-        path: "/events",
-        element: (
-          <Placeholder
-            title="Events"
-            description="Where you'll find us at industry trade shows — page content coming soon."
-          />
-        ),
-      },
+      { path: "/events", element: <Events /> },
       { path: "/contact", element: <Contact /> },
     ],
   },
