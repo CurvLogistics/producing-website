@@ -1,6 +1,7 @@
 import { useEffect, useState, type FormEvent } from "react";
 import { getContactPage } from "../../lib/contactContent";
 import type { ContactPageEntry } from "../../types/contentful";
+import Reveal from "../../components/Reveal/Reveal";
 import "./Contact.css";
 
 type SubmitState = "idle" | "submitting" | "success" | "error";
@@ -109,6 +110,7 @@ export default function Contact() {
 
   return (
     <section className="contact">
+      <Reveal direction="up">
       <div className="contact__inner">
         <div className="contact__head">
           {entry?.fields.eyebrow && <div className="eyebrow">{eyebrow}</div>}
@@ -183,27 +185,30 @@ export default function Contact() {
           {submitState === "error" && <p className="contact__status contact__status--error">{errorMessage}</p>}
         </form>
       </div>
+      </Reveal>
 
       {galleryImages.length > 0 && (
-        <div className="contact__gallery">
-          {entry?.fields.socialLabel && (
-            <a
-              className="contact__social"
-              href={entry.fields.socialHref || "#"}
-              target="_blank"
-              rel="noreferrer"
-            >
-              <span className="contact__social-icon">📷</span>
-              {entry.fields.socialLabel}
-            </a>
-          )}
+        <Reveal direction="up">
+          <div className="contact__gallery">
+            {entry?.fields.socialLabel && (
+              <a
+                className="contact__social"
+                href={entry.fields.socialHref || "#"}
+                target="_blank"
+                rel="noreferrer"
+              >
+                <span className="contact__social-icon">📷</span>
+                {entry.fields.socialLabel}
+              </a>
+            )}
 
-          <div className="contact__gallery-grid">
-            {galleryImages.map((image, i) => (
-              <img key={i} src={image.url} alt={image.alt} loading="lazy" />
-            ))}
+            <div className="contact__gallery-grid">
+              {galleryImages.map((image, i) => (
+                <img key={i} src={image.url} alt={image.alt} loading="lazy" />
+              ))}
+            </div>
           </div>
-        </div>
+        </Reveal>
       )}
     </section>
   );
