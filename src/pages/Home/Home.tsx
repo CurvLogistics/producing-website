@@ -26,7 +26,6 @@ const NOW_SOURCING = ["🟢 Limes", "🍊 Citrus", "🥑 Avocados", "🍇 Table 
 export default function Home() {
   const navigate = useNavigate();
   const [entry, setEntry] = useState<HomePageEntry | null>(null);
-  const [status, setStatus] = useState<"loading" | "ready" | "error">("loading");
 
   useEffect(() => {
     let cancelled = false;
@@ -35,11 +34,9 @@ export default function Home() {
       .then((result) => {
         if (cancelled) return;
         setEntry(result);
-        setStatus("ready");
       })
       .catch((err) => {
         console.error("Failed to load homePage entry from Contentful", err);
-        if (!cancelled) setStatus("error");
       });
 
     return () => {
@@ -60,32 +57,32 @@ export default function Home() {
   const whatWeDoItems: FeatureGridItem[] = (entry?.fields.whatWeDoCards ?? [])
     .filter((card): card is typeof card & { fields: FeatureCardFields } => !!card && "fields" in card)
     .map((card) => ({
-      icon: card.fields.icon,
-      title: card.fields.title,
-      body: card.fields.body,
-      linkHref: card.fields.linkHref,
-      linkLabel: card.fields.linkLabel,
+      icon: card.fields.icon as string,
+      title: card.fields.title as string,
+      body: card.fields.body as string,
+      linkHref: card.fields.linkHref as string | undefined,
+      linkLabel: card.fields.linkLabel as string | undefined,
     }));
 
    const whyChooseItems: FeatureGridItem[] = (entry?.fields.whyChooseCards ?? [])
   .filter((card): card is typeof card & { fields: FeatureCardFields } => !!card && "fields" in card)
   .map((card) => ({
-    icon: card.fields.icon,
-    title: card.fields.title,
-    body: card.fields.body,
-    linkHref: card.fields.linkHref,
-    linkLabel: card.fields.linkLabel,
+    icon: card.fields.icon as string,
+    title: card.fields.title as string,
+    body: card.fields.body as string,
+    linkHref: card.fields.linkHref as string | undefined,
+    linkLabel: card.fields.linkLabel as string | undefined,
   }));
 
   const twoWaysItems: SegmentSplitItem[] = (entry?.fields.twoWaysCards ?? [])
   .filter((card): card is typeof card & { fields: SegmentCardFields } => !!card && "fields" in card)
   .map((card) => ({
-    icon: card.fields.icon,
-    title: card.fields.title,
-    body: card.fields.body,
-    buttonLabel: card.fields.buttonLabel,
-    buttonHref: card.fields.buttonHref,
-    highlight: card.fields.highlight,
+    icon: card.fields.icon as string,
+    title: card.fields.title as string,
+    body: card.fields.body as string,
+    buttonLabel: card.fields.buttonLabel as string,
+    buttonHref: card.fields.buttonHref as string,
+    highlight: card.fields.highlight as boolean | undefined,
   }));
 
   const productTiles: ImageTileGridItem[] = (entry?.fields.productsTiles ?? [])
@@ -95,9 +92,9 @@ export default function Home() {
       const imageAsset = imageField && "fields" in imageField ? imageField : undefined;
       const imageUrl = imageAsset?.fields.file?.url;
       return {
-        label: tile.fields.label,
+        label: tile.fields.label as string,
         imageUrl: imageUrl ? `https:${imageUrl}` : undefined,
-        href: tile.fields.href,
+        href: tile.fields.href as string | undefined,
       };
     });
 
@@ -119,8 +116,8 @@ export default function Home() {
       return {
         mediaUrl: url ? `https:${url}` : "",
         mediaType: contentType.startsWith("video/") ? ("video" as const) : ("image" as const),
-        heading: slide.fields.heading,
-        body: slide.fields.body,
+        heading: slide.fields.heading as string | undefined,
+        body: slide.fields.body as string | undefined,
       };
     })
     .filter((slide) => slide.mediaUrl);
@@ -132,10 +129,10 @@ export default function Home() {
       const imageAsset = imageField && "fields" in imageField ? imageField : undefined;
       const imageUrl = imageAsset?.fields.file?.url;
       return {
-        number: card.fields.number,
-        name: card.fields.name,
-        note: card.fields.note,
-        href: card.fields.href,
+        number: card.fields.number as string,
+        name: card.fields.name as string,
+        note: card.fields.note as string,
+        href: card.fields.href as string | undefined,
         imageUrl: imageUrl ? `https:${imageUrl}` : undefined,
       };
     });
