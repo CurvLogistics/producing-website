@@ -175,8 +175,8 @@
 
 .events-upcoming-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
 }
 
 .events-upcoming-image {
@@ -248,8 +248,9 @@
 
 .events-gallery img {
   width: 100%;
-  height: 170px;
+  aspect-ratio: 4 / 3;
   object-fit: cover;
+  display: block;
   border-radius: 9px;
   box-shadow: 0 8px 24px rgba(18, 53, 36, 0.1);
 }
@@ -259,13 +260,48 @@
 }
 
 .events-cta {
-  max-width: 1180px;
+  position: relative;
+  overflow: hidden;
   margin: 0 auto;
   background: linear-gradient(120deg, var(--green-700), var(--green-900));
   color: #fff;
   border-radius: 16px;
   padding: 56px;
   text-align: center;
+}
+
+.events-cta::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 85% 15%, rgba(224, 138, 44, 0.25), transparent 55%);
+  pointer-events: none;
+}
+
+.events-cta__shape {
+  position: absolute;
+  right: -30px;
+  bottom: -50px;
+  width: 220px;
+  height: 220px;
+  opacity: 0.35;
+  animation: events-cta-float 7s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes events-cta-float {
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-12px) rotate(4deg);
+  }
+}
+
+.events-cta__content {
+  position: relative;
+  z-index: 1;
 }
 
 .events-cta h2 {
@@ -279,13 +315,25 @@
   font-size: 15px;
 }
 
+@media (prefers-reduced-motion: reduce) {
+  .events-cta__shape {
+    animation: none;
+  }
+}
+
 @media (max-width: 900px) {
   .events-upcoming-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr);
   }
 
   .events-gallery {
     grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .events-upcoming-grid {
+    grid-template-columns: 1fr;
   }
 }
 

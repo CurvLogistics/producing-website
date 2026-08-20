@@ -19,6 +19,7 @@ const FILTER_OPTIONS: { value: FilterMode; label: string }[] = [
 
 export default function Events() {
   const [entry, setEntry] = useState<EventsPageEntry | null>(null);
+  const [hasLoaded, setHasLoaded] = useState(false);
   const [search, setSearch] = useState("");
   const [filterMode, setFilterMode] = useState<FilterMode>("all");
   const [filterOpen, setFilterOpen] = useState(false);
@@ -27,9 +28,14 @@ export default function Events() {
     let cancelled = false;
     getEventsPage()
       .then((result) => {
-        if (!cancelled) setEntry(result);
+        if (cancelled) return;
+        setEntry(result);
+        setHasLoaded(true);
       })
-      .catch((err) => console.error("Failed to load eventsPage entry from Contentful", err));
+      .catch((err) => {
+        console.error("Failed to load eventsPage entry from Contentful", err);
+        if (!cancelled) setHasLoaded(true);
+      });
     return () => {
       cancelled = true;
     };
@@ -222,17 +228,29 @@ export default function Events() {
         </Reveal>
       )}
 
+      {hasLoaded && (
       <Reveal direction="up">
         <section className="events-cta-section">
           <div className="events-cta">
-            <h2>{ctaHeading}</h2>
-            <p>{ctaIntro}</p>
-            <Link className="btn btn-primary" to={ctaHref}>
-              {ctaLabel}
-            </Link>
+            <svg className="events-cta__shape" viewBox="0 0 400 400" fill="none" aria-hidden="true">
+              <path
+                d="M60 300c0-60 60-90 100-50s-10 110-60 90-60-90 10-140 150-10 130 60-90 90-140 40"
+                stroke="var(--amber-500)"
+                strokeWidth="14"
+                strokeLinecap="round"
+              />
+            </svg>
+            <div className="events-cta__content">
+              <h2>{ctaHeading}</h2>
+              <p>{ctaIntro}</p>
+              <Link className="btn btn-primary" to={ctaHref}>
+                {ctaLabel}
+              </Link>
+            </div>
           </div>
         </section>
       </Reveal>
+      )}
     </>
   );
 }
