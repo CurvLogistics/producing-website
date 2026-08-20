@@ -127,3 +127,50 @@
     gap: 20px;
   }
 }
+
+.contact__gallery {
+  max-width: 1180px;
+  margin: 64px auto 0;
+  padding: 40px 32px 0;
+  border-top: 1px solid var(--line);
+}
+
+.contact__social {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 700;
+  color: var(--green-900);
+  margin-bottom: 24px;
+}
+
+.contact__social-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--green-900);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+}
+
+.contact__gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+
+.contact__gallery-grid img {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+@media (max-width: 700px) {
+  .contact__gallery-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}

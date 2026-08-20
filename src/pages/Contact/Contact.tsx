@@ -36,6 +36,14 @@ export default function Contact() {
   const errorMessage =
     entry?.fields.errorMessage || "Something went wrong sending your message. Please try again.";
 
+  const galleryImages = (entry?.fields.gallery ?? [])
+    .filter((asset): asset is typeof asset & { fields: { file?: { url?: string }; title?: string } } => !!asset && "fields" in asset)
+    .map((asset) => ({
+      url: asset.fields.file?.url ? `https:${asset.fields.file.url}` : undefined,
+      alt: asset.fields.title ?? "",
+    }))
+    .filter((image): image is { url: string; alt: string } => !!image.url);
+
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const form = e.currentTarget;
@@ -116,6 +124,28 @@ export default function Contact() {
           {submitState === "error" && <p className="contact__status contact__status--error">{errorMessage}</p>}
         </form>
       </div>
+
+      {galleryImages.length > 0 && (
+        <div className="contact__gallery">
+          {entry?.fields.socialLabel && (
+            <a
+              className="contact__social"
+              href={entry.fields.socialHref || "#"}
+              target="_blank"
+              rel="noreferrer"
+            >
+              <span className="contact__social-icon">📷</span>
+              {entry.fields.socialLabel}
+            </a>
+          )}
+
+          <div className="contact__gallery-grid">
+            {galleryImages.map((image, i) => (
+              <img key={i} src={image.url} alt={image.alt} loading="lazy" />
+            ))}
+          </div>
+        </div>
+      )}
     </section>
   );
 }

@@ -132,6 +132,10 @@ export interface ContactPageFields {
   submitLabel?: EntryFieldTypes.Symbol;
   successMessage?: EntryFieldTypes.Symbol;
   errorMessage?: EntryFieldTypes.Symbol;
+
+  socialLabel?: EntryFieldTypes.Symbol;
+  socialHref?: EntryFieldTypes.Symbol;
+  gallery?: EntryFieldTypes.Array<EntryFieldTypes.AssetLink>;
 }
 
 export interface ContactPageSkeleton extends EntrySkeletonType {
