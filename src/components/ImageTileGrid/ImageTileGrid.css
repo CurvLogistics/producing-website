@@ -35,6 +35,7 @@
 
 .image-tile {
   position: relative;
+  display: block;
   border-radius: 10px;
   overflow: hidden;
   height: 210px;
@@ -43,7 +44,9 @@
   background: linear-gradient(135deg, #e7efe9, #cfe0d5);
   background-size: cover;
   background-position: center;
-  transition: transform 0.2s ease;
+  transition: transform 0.2s ease, opacity 0.6s ease, transform 0.6s ease;
+  opacity: 0;
+  transform: translateY(24px);
 }
 
 .image-tile:hover {
@@ -57,6 +60,80 @@
   color: #fff;
   font-weight: 700;
   font-size: 14px;
+}
+
+.image-tile--card {
+  flex-direction: column;
+  align-items: stretch;
+  height: auto;
+  background: #fff;
+  border: 1px solid var(--line);
+  box-shadow: 0 8px 24px rgba(18, 53, 36, 0.1);
+}
+
+.image-tile--card:hover {
+  transform: translateY(-4px);
+}
+
+.image-tile__photo {
+  height: 210px;
+  background: linear-gradient(135deg, #e7efe9, #cfe0d5);
+  background-size: cover;
+  background-position: center;
+}
+
+.image-tile__caption {
+  padding: 16px 18px 20px;
+}
+
+.image-tile__name {
+  font-size: 15.5px;
+  font-weight: 700;
+  color: var(--green-900);
+}
+
+.image-tile__role {
+  font-size: 13.5px;
+  color: var(--ink-soft);
+  margin-top: 2px;
+}
+
+.image-tile-grid__tiles--visible .image-tile {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.image-tile-grid__tiles--visible .image-tile:nth-child(1) {
+  transition-delay: 0.05s;
+}
+.image-tile-grid__tiles--visible .image-tile:nth-child(2) {
+  transition-delay: 0.1s;
+}
+.image-tile-grid__tiles--visible .image-tile:nth-child(3) {
+  transition-delay: 0.15s;
+}
+.image-tile-grid__tiles--visible .image-tile:nth-child(4) {
+  transition-delay: 0.2s;
+}
+.image-tile-grid__tiles--visible .image-tile:nth-child(5) {
+  transition-delay: 0.25s;
+}
+.image-tile-grid__tiles--visible .image-tile:nth-child(6) {
+  transition-delay: 0.3s;
+}
+.image-tile-grid__tiles--visible .image-tile:nth-child(7) {
+  transition-delay: 0.35s;
+}
+.image-tile-grid__tiles--visible .image-tile:nth-child(8) {
+  transition-delay: 0.4s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .image-tile {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
 }
 
 .image-tile-grid__cta {

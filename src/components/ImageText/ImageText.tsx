@@ -11,6 +11,7 @@ interface ImageTextProps {
   linkLabel?: string;
   linkHref?: string;
   alt?: boolean;
+  compact?: boolean;
 }
 
 export default function ImageText({
@@ -23,6 +24,7 @@ export default function ImageText({
   linkLabel,
   linkHref,
   alt,
+  compact,
 }: ImageTextProps) {
   return (
     <section className={`image-text${alt ? " image-text--alt" : ""}`}>
@@ -32,7 +34,11 @@ export default function ImageText({
             <source src={videoUrl} type="video/mp4" />
           </video>
         ) : imageUrl ? (
-          <img className="image-text__image" src={imageUrl} alt={imageAlt ?? ""} />
+          <img
+            className={`image-text__image${compact ? " image-text__image--compact" : ""}`}
+            src={imageUrl}
+            alt={imageAlt ?? ""}
+          />
         ) : (
           <div className="image-text__image image-text__image--placeholder">
             <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">

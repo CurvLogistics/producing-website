@@ -33,6 +33,13 @@ img.image-text__image {
   display: block;
 }
 
+img.image-text__image--compact {
+  max-width: 480px;
+  max-height: 400px;
+  object-fit: cover;
+  margin: 0 auto;
+}
+
 div.image-text__image {
   height: 340px;
   border-radius: 10px;

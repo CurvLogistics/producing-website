@@ -148,6 +148,8 @@ export type ContactPageEntry = Entry<ContactPageSkeleton, undefined>;
 export interface UpcomingEventFields {
   image: EntryFieldTypes.AssetLink;
   name?: EntryFieldTypes.Symbol;
+  dateTime?: EntryFieldTypes.Date;
+  description?: EntryFieldTypes.Text;
   href?: EntryFieldTypes.Symbol;
 }
 
@@ -197,3 +199,57 @@ export interface EventsPageSkeleton extends EntrySkeletonType {
 }
 
 export type EventsPageEntry = Entry<EventsPageSkeleton, undefined>;
+
+export interface TeamMemberFields {
+  name: EntryFieldTypes.Symbol;
+  role?: EntryFieldTypes.Symbol;
+  image?: EntryFieldTypes.AssetLink;
+  href?: EntryFieldTypes.Symbol;
+}
+
+export interface TeamMemberSkeleton extends EntrySkeletonType {
+  contentTypeId: "teamMember";
+  fields: TeamMemberFields;
+}
+
+export type TeamMemberEntry = Entry<TeamMemberSkeleton, undefined>;
+
+export interface AboutPageFields {
+  heroEyebrow?: EntryFieldTypes.Symbol;
+  heroHeading?: EntryFieldTypes.Symbol;
+  heroIntro?: EntryFieldTypes.Symbol;
+  heroImage?: EntryFieldTypes.AssetLink;
+
+  storyHeading?: EntryFieldTypes.Symbol;
+  storyBody?: EntryFieldTypes.Text;
+  storyImage?: EntryFieldTypes.AssetLink;
+
+  stat1Value?: EntryFieldTypes.Number;
+  stat1Label?: EntryFieldTypes.Symbol;
+  stat2Value?: EntryFieldTypes.Number;
+  stat2Label?: EntryFieldTypes.Symbol;
+  stat3Value?: EntryFieldTypes.Number;
+  stat3Label?: EntryFieldTypes.Symbol;
+  stat4Value?: EntryFieldTypes.Number;
+  stat4Label?: EntryFieldTypes.Symbol;
+  statsNote?: EntryFieldTypes.Symbol;
+
+  valuesEyebrow?: EntryFieldTypes.Symbol;
+  valuesHeading?: EntryFieldTypes.Symbol;
+  valuesCards?: EntryFieldTypes.Array<EntryFieldTypes.EntryLink<FeatureCardSkeleton>>;
+
+  newsEyebrow?: EntryFieldTypes.Symbol;
+  newsHeading?: EntryFieldTypes.Symbol;
+  newsCards?: EntryFieldTypes.Array<EntryFieldTypes.EntryLink<FeatureCardSkeleton>>;
+
+  teamEyebrow?: EntryFieldTypes.Symbol;
+  teamHeading?: EntryFieldTypes.Symbol;
+  ourTeam?: EntryFieldTypes.Array<EntryFieldTypes.EntryLink<TeamMemberSkeleton>>;
+}
+
+export interface AboutPageSkeleton extends EntrySkeletonType {
+  contentTypeId: "aboutPage";
+  fields: AboutPageFields;
+}
+
+export type AboutPageEntry = Entry<AboutPageSkeleton, undefined>;

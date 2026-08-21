@@ -6,6 +6,7 @@ import MainLayout from "./layouts/MainLayout";
 import Home from "./pages/Home/Home";
 import Contact from "./pages/Contact/Contact";
 import Events from "./pages/Events/Events";
+import About from "./pages/About/About";
 import Placeholder from "./pages/Placeholder";
 
 const router = createBrowserRouter([
@@ -22,15 +23,7 @@ const router = createBrowserRouter([
           />
         ),
       },
-      {
-        path: "/about",
-        element: (
-          <Placeholder
-            title="About"
-            description="Our story, values, and team page content coming soon."
-          />
-        ),
-      },
+      { path: "/about", element: <About /> },
       { path: "/events", element: <Events /> },
       { path: "/contact", element: <Contact /> },
     ],

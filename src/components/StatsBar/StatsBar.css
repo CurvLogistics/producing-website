@@ -1,0 +1,49 @@
+.stats-bar {
+  background: var(--green-900);
+  color: #fff;
+  padding: 44px 0;
+}
+
+.stats-bar__inner {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 0 32px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+.stats-bar__stat {
+  text-align: center;
+}
+
+.stats-bar__num {
+  font-family: var(--font-family-ubuntu);
+  font-size: 32px;
+  font-weight: 800;
+  color: var(--amber-500);
+}
+
+.stats-bar__label {
+  font-size: 13px;
+  color: #cfe3d6;
+  margin-top: 6px;
+}
+
+.stats-bar__note {
+  max-width: 1180px;
+  margin: 10px auto 0;
+  padding: 0 32px;
+}
+
+.stats-bar__note span {
+  font-size: 11.5px;
+  color: #cfe3d6;
+}
+
+@media (max-width: 700px) {
+  .stats-bar__inner {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 28px;
+  }
+}

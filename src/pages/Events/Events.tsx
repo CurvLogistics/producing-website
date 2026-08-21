@@ -60,9 +60,25 @@ export default function Events() {
       const imageField = event.fields.image;
       const imageAsset = imageField && "fields" in imageField ? imageField : undefined;
       const imageUrl = imageAsset?.fields.file?.url;
+
+      const rawDateTime = event.fields.dateTime as string | undefined;
+      const parsedDate = rawDateTime ? new Date(rawDateTime) : undefined;
+      const formattedDateTime =
+        parsedDate && !Number.isNaN(parsedDate.getTime())
+          ? parsedDate.toLocaleString(undefined, {
+              month: "short",
+              day: "numeric",
+              year: "numeric",
+              hour: "numeric",
+              minute: "2-digit",
+            })
+          : undefined;
+
       return {
         imageUrl: imageUrl ? `https:${imageUrl}` : undefined,
         name: (event.fields.name as string | undefined) ?? "",
+        dateTime: formattedDateTime,
+        description: event.fields.description as string | undefined,
         href: event.fields.href as string | undefined,
       };
     })
@@ -178,20 +194,26 @@ export default function Events() {
 
               <div className="events-upcoming-grid">
                 {filteredUpcoming.map((event, i) => {
-                  const image = (
+                  const cardBody = (
                     <>
-                      <img src={event.imageUrl} alt={event.name} loading="lazy" />
-                      {event.name && <span className="events-upcoming-image__label">{event.name}</span>}
+                      <div className="events-upcoming-card__photo">
+                        <img src={event.imageUrl} alt={event.name} loading="lazy" />
+                      </div>
+                      <div className="events-upcoming-card__body">
+                        {event.name && <h4>{event.name}</h4>}
+                        {event.dateTime && <span className="events-upcoming-card__date">{event.dateTime}</span>}
+                        {event.description && <p>{event.description}</p>}
+                      </div>
                     </>
                   );
 
                   return event.href ? (
-                    <Link className="events-upcoming-image" to={event.href} key={i}>
-                      {image}
+                    <Link className="events-upcoming-card" to={event.href} key={i}>
+                      {cardBody}
                     </Link>
                   ) : (
-                    <div className="events-upcoming-image" key={i}>
-                      {image}
+                    <div className="events-upcoming-card" key={i}>
+                      {cardBody}
                     </div>
                   );
                 })}
