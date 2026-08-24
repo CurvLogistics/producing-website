@@ -7,22 +7,14 @@ import Home from "./pages/Home/Home";
 import Contact from "./pages/Contact/Contact";
 import Events from "./pages/Events/Events";
 import About from "./pages/About/About";
-import Placeholder from "./pages/Placeholder";
+import Products from "./pages/Products/Products";
 
 const router = createBrowserRouter([
   {
     element: <MainLayout />,
     children: [
       { path: "/", element: <Home /> },
-      {
-        path: "/products",
-        element: (
-          <Placeholder
-            title="Products & Services"
-            description="Wholesale, retail, import/export, and distribution page content coming soon."
-          />
-        ),
-      },
+      { path: "/products", element: <Products /> },
       { path: "/about", element: <About /> },
       { path: "/events", element: <Events /> },
       { path: "/contact", element: <Contact /> },

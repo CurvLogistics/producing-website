@@ -17,6 +17,21 @@
   align-items: center;
 }
 
+.image-text__inner--compact {
+  grid-template-columns: auto 1fr;
+}
+
+.image-text__inner--text-only {
+  display: block;
+  max-width: 760px;
+}
+
+.image-text__inner--stacked {
+  display: block;
+  max-width: 760px;
+  margin: 0 auto;
+}
+
 .image-text .eyebrow {
   color: var(--amber-600);
   font-weight: 700;
@@ -38,6 +53,14 @@ img.image-text__image--compact {
   max-height: 400px;
   object-fit: cover;
   margin: 0 auto;
+}
+
+img.image-text__image--stacked {
+  width: 100%;
+  max-width: 480px;
+  max-height: 280px;
+  object-fit: cover;
+  margin: 0 auto 32px;
 }
 
 div.image-text__image {
@@ -84,6 +107,13 @@ div.image-text__image {
   font-size: 32px;
   color: var(--green-900);
   margin-bottom: 18px;
+}
+
+.image-text__reference {
+  font-style: italic;
+  font-weight: 600;
+  color: var(--green-700);
+  font-size: 14px;
 }
 
 .image-text p {

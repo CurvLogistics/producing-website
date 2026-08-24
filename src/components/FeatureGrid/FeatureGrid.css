@@ -85,6 +85,14 @@
   margin: 0 0 12px;
 }
 
+.feature-card__bullets {
+  margin: 0 0 12px;
+  padding-left: 18px;
+  color: var(--ink-soft);
+  font-size: 13.5px;
+  line-height: 1.8;
+}
+
 .feature-card__link {
   font-size: 13.5px;
   font-weight: 700;

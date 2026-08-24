@@ -43,7 +43,10 @@ export default function Carousel({ slides, autoPlayMs = 6000 }: CarouselProps) {
               <source src={slide.mediaUrl} type="video/mp4" />
             </video>
           ) : (
-            <div className="carousel__media" style={{ backgroundImage: `url(${slide.mediaUrl})` }} />
+            <div
+              className="carousel__media"
+              style={slide.mediaUrl ? { backgroundImage: `url(${slide.mediaUrl})` } : undefined}
+            />
           )}
           <div className="carousel__overlay" />
           {(slide.heading || slide.body) && (

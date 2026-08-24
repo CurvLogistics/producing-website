@@ -33,15 +33,17 @@ export default function About() {
   const heroImageAsset = heroImageField && "fields" in heroImageField ? heroImageField : undefined;
   const heroImageUrl = heroImageAsset?.fields.file?.url;
 
-  const storyHeading = entry?.fields.storyHeading || "From Farm to Fork";
+  const storyEyebrow = entry?.fields.storyEyebrow;
+  const storyHeading = entry?.fields.storyHeading;
   const storyBody =
     entry?.fields.storyBody ||
     "When it comes to fresh fruits and vegetables, we're not just another player — we're focused on doing it right. With years of experience and a passion for bringing the freshest produce to our customers, we've earned our place as an industry leader. Whether it's sourcing the ripest produce, delivering on time, or meeting the highest food safety standards, we treat every order with the same level of care.";
+  const storyReference = entry?.fields.storyReference;
 
   const storyImageField = entry?.fields.storyImage;
   const storyImageAsset = storyImageField && "fields" in storyImageField ? storyImageField : undefined;
   const storyImageUrl = storyImageAsset?.fields.file?.url;
-  const storyImageAlt = storyImageAsset?.fields.title ?? "Team at the warehouse";
+  const storyImageAlt = storyImageAsset?.fields.title ?? "Producing founder";
 
   const statItems: StatsBarItem[] = [
     { value: entry?.fields.stat1Value ?? 15, label: entry?.fields.stat1Label || "Years in Business*" },
@@ -128,12 +130,14 @@ export default function About() {
 
       <Reveal direction="up">
         <ImageText
+          eyebrow={storyEyebrow}
           heading={storyHeading}
           body={storyBody}
+          reference={storyReference}
           imageUrl={storyImageUrl ? `https:${storyImageUrl}` : undefined}
           imageAlt={storyImageAlt}
           alt
-          compact
+          stacked
         />
       </Reveal>
 

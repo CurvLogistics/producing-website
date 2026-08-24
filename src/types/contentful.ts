@@ -220,8 +220,10 @@ export interface AboutPageFields {
   heroIntro?: EntryFieldTypes.Symbol;
   heroImage?: EntryFieldTypes.AssetLink;
 
+  storyEyebrow?: EntryFieldTypes.Symbol;
   storyHeading?: EntryFieldTypes.Symbol;
   storyBody?: EntryFieldTypes.Text;
+  storyReference?: EntryFieldTypes.Symbol;
   storyImage?: EntryFieldTypes.AssetLink;
 
   stat1Value?: EntryFieldTypes.Number;
@@ -253,3 +255,33 @@ export interface AboutPageSkeleton extends EntrySkeletonType {
 }
 
 export type AboutPageEntry = Entry<AboutPageSkeleton, undefined>;
+
+export interface ProductsPageFields {
+  heroEyebrow?: EntryFieldTypes.Symbol;
+  heroHeading?: EntryFieldTypes.Symbol;
+  heroIntro?: EntryFieldTypes.Symbol;
+  heroImage?: EntryFieldTypes.AssetLink;
+
+  gallerySlides?: EntryFieldTypes.Array<EntryFieldTypes.EntryLink<CarouselSlideSkeleton>>;
+
+  processEyebrow?: EntryFieldTypes.Symbol;
+  processHeading?: EntryFieldTypes.Symbol;
+  processBody?: EntryFieldTypes.Text;
+
+  servicesEyebrow?: EntryFieldTypes.Symbol;
+  servicesHeading?: EntryFieldTypes.Symbol;
+  servicesIntro?: EntryFieldTypes.Symbol;
+  serviceCards?: EntryFieldTypes.Array<EntryFieldTypes.EntryLink<FeatureCardSkeleton>>;
+
+  ctaHeading?: EntryFieldTypes.Symbol;
+  ctaIntro?: EntryFieldTypes.Symbol;
+  ctaLabel?: EntryFieldTypes.Symbol;
+  ctaHref?: EntryFieldTypes.Symbol;
+}
+
+export interface ProductsPageSkeleton extends EntrySkeletonType {
+  contentTypeId: "productsPage";
+  fields: ProductsPageFields;
+}
+
+export type ProductsPageEntry = Entry<ProductsPageSkeleton, undefined>;
