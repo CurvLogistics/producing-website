@@ -103,8 +103,8 @@ export default function Events() {
         .filter((image): image is { url: string; alt: string } => !!image.url);
 
       return {
-        name: group.fields.name as string,
-        note: group.fields.note as string,
+        name: (group.fields.name as string | undefined) ?? "",
+        note: (group.fields.note as string | undefined) ?? "",
         images,
       };
     });
@@ -182,6 +182,10 @@ export default function Events() {
           </div>
         </div>
       </section>
+
+      {hasLoaded && searchLower && filteredUpcoming.length === 0 && filteredGroups.length === 0 && (
+        <div className="events-no-results">No events found for "{search.trim()}".</div>
+      )}
 
       {showUpcoming && filteredUpcoming.length > 0 && (
         <Reveal direction="up">
