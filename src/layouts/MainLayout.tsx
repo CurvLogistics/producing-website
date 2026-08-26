@@ -64,7 +64,12 @@ export default function MainLayout() {
               relationships.
             </p>
             <div className="site-footer__social">
-              <a href="#" aria-label="LinkedIn">
+              <a
+                href="https://www.linkedin.com/company/producing-inc"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="LinkedIn"
+              >
                 in
               </a>
               <a href="#" aria-label="Instagram">
