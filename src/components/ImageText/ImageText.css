@@ -1,0 +1,130 @@
+.image-text {
+  padding: 76px 0;
+  background: var(--green-100);
+}
+
+.image-text--alt {
+  background: transparent;
+}
+
+.image-text__inner {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 0 32px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 56px;
+  align-items: center;
+}
+
+.image-text__inner--compact {
+  grid-template-columns: auto 1fr;
+}
+
+.image-text__inner--text-only {
+  display: block;
+  max-width: 760px;
+}
+
+.image-text__inner--stacked {
+  display: block;
+  max-width: 760px;
+  margin: 0 auto;
+}
+
+.image-text .eyebrow {
+  color: var(--amber-600);
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+
+img.image-text__image {
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+  display: block;
+}
+
+img.image-text__image--compact {
+  max-width: 480px;
+  max-height: 400px;
+  object-fit: cover;
+  margin: 0 auto;
+}
+
+img.image-text__image--stacked {
+  width: 100%;
+  max-width: 480px;
+  max-height: 280px;
+  object-fit: cover;
+  margin: 0 auto 32px;
+}
+
+div.image-text__image {
+  height: 340px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #e7efe9, #cfe0d5);
+  border: 1px solid rgba(31, 92, 63, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px;
+  text-align: center;
+}
+
+.image-text__image--placeholder {
+  flex-direction: column;
+  gap: 12px;
+  border: 1.5px dashed rgba(31, 92, 63, 0.3);
+  background: linear-gradient(135deg, #eef4f0, #dfeae2);
+}
+
+.image-text__image--placeholder svg {
+  width: 40px;
+  height: 40px;
+  color: rgba(31, 92, 63, 0.45);
+}
+
+.image-text__image span {
+  color: #3f5c4c;
+  font-size: 13px;
+  font-weight: 600;
+  max-width: 220px;
+}
+
+.image-text__video {
+  width: 100%;
+  height: 340px;
+  border-radius: 10px;
+  object-fit: cover;
+  background: linear-gradient(135deg, #e7efe9, #cfe0d5);
+}
+
+.image-text h2 {
+  font-size: 32px;
+  color: var(--green-900);
+  margin-bottom: 18px;
+}
+
+.image-text__reference {
+  font-style: italic;
+  font-weight: 600;
+  color: var(--green-700);
+  font-size: 14px;
+}
+
+.image-text p {
+  font-size: 15px;
+  color: var(--ink-soft);
+  line-height: 1.7;
+  margin-bottom: 20px;
+}
+
+@media (max-width: 900px) {
+  .image-text__inner {
+    grid-template-columns: 1fr;
+  }
+}
