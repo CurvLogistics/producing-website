@@ -1,0 +1,114 @@
+.products-hero {
+  position: relative;
+  min-height: 320px;
+  display: flex;
+  align-items: center;
+  background: linear-gradient(120deg, rgba(10, 32, 21, 0.88), rgba(10, 32, 21, 0.55)), #1f5c3f;
+  background-size: cover;
+  background-position: center;
+  color: #fff;
+}
+
+.products-hero__overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(120deg, rgba(10, 32, 21, 0.75), rgba(10, 32, 21, 0.35));
+}
+
+.products-hero__inner {
+  position: relative;
+  z-index: 1;
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 60px 32px;
+  width: 100%;
+}
+
+.products-hero .eyebrow {
+  color: var(--amber-500);
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+
+.products-hero h1 {
+  font-family: var(--font-family-ubuntu);
+  font-size: 38px;
+  max-width: 680px;
+  margin: 0 0 16px;
+}
+
+.products-hero p {
+  font-size: 16px;
+  max-width: 560px;
+  color: #e7efe9;
+  line-height: 1.6;
+}
+
+.products-cta-section {
+  padding: 64px 32px;
+}
+
+.products-cta {
+  position: relative;
+  overflow: hidden;
+  margin: 0 auto;
+  background: linear-gradient(120deg, var(--green-700), var(--green-900));
+  color: #fff;
+  border-radius: 16px;
+  padding: 56px;
+  text-align: center;
+}
+
+.products-cta::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 85% 15%, rgba(224, 138, 44, 0.25), transparent 55%);
+  pointer-events: none;
+}
+
+.products-cta__shape {
+  position: absolute;
+  right: -30px;
+  bottom: -50px;
+  width: 220px;
+  height: 220px;
+  opacity: 0.35;
+  animation: products-cta-float 7s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes products-cta-float {
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-12px) rotate(4deg);
+  }
+}
+
+.products-cta__content {
+  position: relative;
+  z-index: 1;
+}
+
+.products-cta h2 {
+  font-size: 28px;
+  margin-bottom: 12px;
+}
+
+.products-cta p {
+  color: #dceae1;
+  margin-bottom: 26px;
+  font-size: 15px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .products-cta__shape {
+    animation: none;
+  }
+}
