@@ -81,6 +81,26 @@ async function sendWhatsApp({ name, email, phone, message }) {
   }
 }
 
+// --- Runtime config for the frontend bundle ---
+//
+// GoDaddy's Node.js Hosting doesn't expose Secrets to the `vite build` step
+// (only to the running server process), so VITE_CONTENTFUL_* never actually
+// gets baked into the built JS the way it would on Vercel or in local dev —
+// the bundle silently ships with these as undefined. To work around that,
+// the server hands these values to the browser at request time instead, and
+// src/lib/contentful.ts reads them from window.__APP_CONFIG__ if present,
+// falling back to import.meta.env (so Vercel / `vite dev` still work
+// unchanged).
+app.get("/config.js", (req, res) => {
+  res.type("application/javascript");
+  res.send(
+    `window.__APP_CONFIG__ = ${JSON.stringify({
+      contentfulSpaceId: process.env.VITE_CONTENTFUL_SPACE_ID || "",
+      contentfulAccessToken: process.env.VITE_CONTENTFUL_ACCESS_TOKEN || "",
+    })};`,
+  );
+});
+
 // --- Static frontend (the Vite build output) ---
 
 const distPath = path.join(__dirname, "dist");
