@@ -3,9 +3,14 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "main": "server.js",
+  "engines": {
+    "node": "22.x"
+  },
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
+    "start": "node server.js",
     "lint": "eslint .",
     "preview": "vite preview"
   },
@@ -13,6 +18,7 @@
     "@contentful/rich-text-react-renderer": "^16.2.2",
     "@contentful/rich-text-types": "^17.2.7",
     "contentful": "^11.12.9",
+    "express": "^5.1.0",
     "react": "^19.2.8",
     "react-dom": "^19.2.8",
     "react-router-dom": "^7.18.2",
