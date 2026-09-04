@@ -52,7 +52,7 @@ export default function About() {
     { value: entry?.fields.stat4Value ?? 40, label: entry?.fields.stat4Label || "Produce Varieties*" },
   ];
   const statsNote =
-    entry?.fields.statsNote || "*Placeholder figures — to be replaced with real numbers.";
+    entry?.fields.statsNote;
 
   const valuesEyebrow = entry?.fields.valuesEyebrow || "Our Values";
   const valuesHeading = entry?.fields.valuesHeading || "What Drives Us";
